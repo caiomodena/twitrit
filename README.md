@@ -52,6 +52,6 @@ CI / Deploy
 - Travis
 
 Infra
+- Docker
 - Heroku
 - MongoDB Atlas
-
