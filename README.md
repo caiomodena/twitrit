@@ -39,8 +39,7 @@ Database
 - Mongo
 
 Monitoramento
-- Prometheus
-- Grafana
+- Uptime Robot
 
 Programação
 - Javascript / Typescript
@@ -55,3 +54,21 @@ Infra
 - Docker
 - Heroku
 - MongoDB Atlas
+
+
+### Pós MVP
+
+Monitoramento
+- Prometheus
+- Grafana
+
+UI
+- Webapp em React
+- Mobile App
+
+Infra
+- Aws ECS
+
+...
+
+
