@@ -1,11 +1,12 @@
-should = require("should");
 require('dotenv').config();
 
+const urlBase = process.env.URL_BASE
+
+var should = require("should");
 var request = require("request");
 var chai = require("chai");
-var expect = chai.expect;
 
-var urlBase = process.env.URL_BASE
+var expect = chai.expect;
 
 describe("Recursos do tweet ", function () {
     it("Deve ser possível criar um tweet", function (done) {
