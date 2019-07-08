@@ -1,0 +1,27 @@
+{
+  "name": "twitrit",
+  "version": "1.0.0",
+  "description": "Projeto para Twitrit ",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matheusgonzagafs/twitrit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matheusgonzagafs/twitrit/issues"
+  },
+  "homepage": "https://github.com/matheusgonzagafs/twitrit#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "request": "^2.88.0",
+    "should": "^13.2.3"
+  },
+  "dependencies": {
+    "dotenv": "^8.0.0"
+  }
+}

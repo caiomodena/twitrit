@@ -33,7 +33,9 @@ PUT /user/:id
 ### MVP
 
 Teste
-- Rest-assured
+- Mocha
+- Chai
+- should
 
 Database
 - Mongo
