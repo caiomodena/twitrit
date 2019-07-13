@@ -11,6 +11,7 @@ application.use(cors())
 application.get('/user', new UserHandler().get)
 application.post('/user', new UserHandler().post)
 application.patch('/user/:id', new UserHandler().patch)
+application.delete('/user/:id', new UserHandler().delete)
 
 application.set('port', process.env.APP_PORT || 3007)
 

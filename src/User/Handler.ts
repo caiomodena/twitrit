@@ -13,13 +13,13 @@ export class Handler {
 
       let userRepository = new UserRepository(database)
 
-      response.json({
+      return response.json({
         items: await userRepository.findAll(),
         total: await userRepository.findCount()
       })
 
     } catch (error) {
-      response
+      return response
         .status(500)
         .json({
           "message": error.message
@@ -41,12 +41,12 @@ export class Handler {
 
       await userRepository.save(user)
 
-      response
+      return response
         .status(201)
         .json(user)
 
     } catch (error) {
-      response
+      return response
         .status(500)
         .json({
           "message": error.message
@@ -67,8 +67,9 @@ export class Handler {
       let user = await userRepository.findOne(request.params.id)
 
       if (!user) {
-        response
+        return response
           .status(404)
+          .send()
       }
 
       user.name = request.body.name
@@ -76,12 +77,12 @@ export class Handler {
 
       await userRepository.save(user)
 
-      response
+      return response
         .status(201)
         .json(user)
 
     } catch (error) {
-      response
+      return response
         .status(500)
         .json({
           "message": error.message
@@ -89,4 +90,39 @@ export class Handler {
     }
 
   }
+
+  public async delete(request: Request, response: Response, next: NextFunction) {
+    try {
+
+      const database = mongoose.createConnection('mongodb://mongo', { dbName: 'twitrit' })
+
+      let userRepository = new UserRepository(database)
+
+      let UserModel = database.model<IUserModel>('User', UserSchema)
+
+      let user = await userRepository.findOne(request.params.id)
+
+      if (!user) {
+        return response
+          .status(404)
+          .send()
+      }
+
+      await userRepository.delete(user)
+
+      return response
+        .status(204)
+        .send()
+
+    } catch (error) {
+      return response
+        .status(500)
+        .json({
+          "message": error.message
+        })
+    }
+
+  }
+
+
 }

@@ -28,4 +28,8 @@ export class Repository {
     return this.Model.findById(id)
   }
 
+  public async delete(user: IUserModel): Promise<IUserModel> {
+    return user.remove()
+  }
+
 }
