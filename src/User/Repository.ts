@@ -18,4 +18,8 @@ export class Repository {
     return this.Model.count({})
   }
 
+  public async save(user: IUserModel): Promise<IUserModel> {
+    return this.Model.create(user)
+  }
+
 }

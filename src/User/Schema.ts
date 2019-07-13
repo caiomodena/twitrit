@@ -5,8 +5,15 @@ export interface IUserModel extends IUser, Document {
 }
 
 export const UserSchema: Schema = new Schema({
-  name: String,
-  email: String
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  }
 }, {
   collection: 'user',
   versionKey: false
