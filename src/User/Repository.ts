@@ -1,6 +1,6 @@
 import { IUserModel, UserSchema } from './Schema'
 import { Connection, Model } from 'mongoose'
-import { MongoError } from 'mongodb'
+import { ObjectId } from 'mongodb'
 
 export class Repository {
 
@@ -19,7 +19,13 @@ export class Repository {
   }
 
   public async save(user: IUserModel): Promise<IUserModel> {
-    return this.Model.create(user)
+    user.validate()
+
+    return user.save()
+  }
+
+  public async findOne(id: string): Promise<IUserModel> {
+    return this.Model.findById(id)
   }
 
 }
