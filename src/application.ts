@@ -9,6 +9,7 @@ application.use(express.urlencoded({extended: false}))
 application.use(cors())
 
 application.get('/user', new UserHandler().get)
+application.get('/user/:id', new UserHandler().get)
 application.post('/user', new UserHandler().post)
 application.patch('/user/:id', new UserHandler().patch)
 application.delete('/user/:id', new UserHandler().delete)

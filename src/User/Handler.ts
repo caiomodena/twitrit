@@ -13,6 +13,18 @@ export class Handler {
 
       let userRepository = new UserRepository(database)
 
+      if (request.params.id) {
+        let user = await userRepository.findOne(request.params.id)
+
+        if (!user) {
+          return response
+            .status(404)
+            .send()
+        }
+
+        return response.json(user)
+      }
+
       return response.json({
         items: await userRepository.findAll(),
         total: await userRepository.findCount()
@@ -123,6 +135,5 @@ export class Handler {
     }
 
   }
-
 
 }
