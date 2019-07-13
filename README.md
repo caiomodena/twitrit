@@ -1,9 +1,24 @@
 # twitrit
 
+O sistema cria, como MVP, um ecossistema que permita o envio de mensagens curtas de até 140 caracteres, sendo possível:
+
+•	Seguir outras pessoas;
+
+•	Buscar suas mensagens ou mensagens de outras pessoas;
+
+•	Deletar suas próprias mensagens;
+
+•	Responder mensagens suas ou de outras pessoas;
+
+•	Buscar usuários;
+
+•	Deletar seu usuário. 
+
+A API é dividida conforme abaixo:
 
 ### Tweet
 
-POST /tweet
+POST /tweet 
 
 DEL /tweet/:id
 
