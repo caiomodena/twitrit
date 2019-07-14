@@ -1,35 +1,41 @@
 import { IUserModel, UserSchema } from './Schema'
-import { Connection, Model } from 'mongoose'
-import { ObjectId } from 'mongodb'
+import { Connection } from 'mongoose'
+import { Mongo } from '../Database/Connection';
+import { IUser } from './Entity';
+import { IRepository } from "../Database/Repository";
 
-export class Repository {
+export class Repository implements IRepository {
 
-  readonly Model: Model<IUserModel>
+  readonly Connection: Connection
 
-  public constructor (public readonly database: Connection) {
-    this.Model = database.model<IUserModel>('User', UserSchema)
+  public constructor () {
+    this.Connection = (new Mongo()).getConnection()
   }
 
-  public async findAll(): Promise<IUserModel[]> {
-    return this.Model.find()
+  public async findAll(): Promise<IUser[]> {
+    return this.Connection.model<IUserModel>('User', UserSchema).find({})
   }
 
-  public async findCount(): Promise<number> {
-    return this.Model.count({})
+  public async save(user: IUser): Promise<IUser> {
+    let UserModel = this.Connection.model<IUserModel>('User', UserSchema)
+
+    let userModel = new UserModel(user)
+
+    userModel.validate()
+
+    return userModel.save()
   }
 
-  public async save(user: IUserModel): Promise<IUserModel> {
-    user.validate()
-
-    return user.save()
+  public async findOne(id: string): Promise<IUser> {
+    return this.Connection.model<IUserModel>('User', UserSchema).findById(id)
   }
 
-  public async findOne(id: string): Promise<IUserModel> {
-    return this.Model.findById(id)
-  }
+  public async delete(user: IUser): Promise<IUser> {
+    let UserModel = this.Connection.model<IUserModel>('User', UserSchema)
 
-  public async delete(user: IUserModel): Promise<IUserModel> {
-    return user.remove()
+    let userModel = new UserModel(user)
+
+    return userModel.remove()
   }
 
 }

@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
-import * as mongoose from 'mongoose'
-import { Repository as UserRepository } from './Repository'
-import { IUserModel, UserSchema } from './Schema';
+import { Repository } from './Repository'
+import { Service } from './Service';
 
 export class Handler {
 
@@ -9,12 +8,8 @@ export class Handler {
 
     try {
 
-      const database = mongoose.createConnection('mongodb://mongo', { dbName: 'twitrit' })
-
-      let userRepository = new UserRepository(database)
-
       if (request.params.id) {
-        let user = await userRepository.findOne(request.params.id)
+        let user = await (new Service(new Repository())).retrieveUser(request.params.id)
 
         if (!user) {
           return response
@@ -25,58 +20,51 @@ export class Handler {
         return response.json(user)
       }
 
+      let users = await (new Service(new Repository())).listUsers()
+
       return response.json({
-        items: await userRepository.findAll(),
-        total: await userRepository.findCount()
+        items: users
       })
 
     } catch (error) {
+
       return response
         .status(500)
         .json({
           "message": error.message
         })
+
     }
 
   }
 
   public async post(request: Request, response: Response, next: NextFunction) {
+
     try {
 
-      const database = mongoose.createConnection('mongodb://mongo', { dbName: 'twitrit' })
+      let user = await (new Service(new Repository())).createNewUser(request.body)
 
-      let userRepository = new UserRepository(database)
-
-      let UserModel = database.model<IUserModel>('User', UserSchema)
-
-      let user = new UserModel(request.body)
-
-      await userRepository.save(user)
-
-      return response
+      response
         .status(201)
         .json(user)
 
     } catch (error) {
-      return response
+
+      response
         .status(500)
         .json({
           "message": error.message
         })
+
     }
 
   }
 
   public async patch(request: Request, response: Response, next: NextFunction) {
+
     try {
 
-      const database = mongoose.createConnection('mongodb://mongo', { dbName: 'twitrit' })
-
-      let userRepository = new UserRepository(database)
-
-      let UserModel = database.model<IUserModel>('User', UserSchema)
-
-      let user = await userRepository.findOne(request.params.id)
+      let user = await (new Service(new Repository())).retrieveUser(request.params.id)
 
       if (!user) {
         return response
@@ -87,32 +75,29 @@ export class Handler {
       user.name = request.body.name
       user.email = request.body.email
 
-      await userRepository.save(user)
+      await (new Service(new Repository())).updateUser(user)
 
       return response
         .status(201)
         .json(user)
 
     } catch (error) {
+
       return response
         .status(500)
         .json({
           "message": error.message
         })
+
     }
 
   }
 
   public async delete(request: Request, response: Response, next: NextFunction) {
+
     try {
 
-      const database = mongoose.createConnection('mongodb://mongo', { dbName: 'twitrit' })
-
-      let userRepository = new UserRepository(database)
-
-      let UserModel = database.model<IUserModel>('User', UserSchema)
-
-      let user = await userRepository.findOne(request.params.id)
+      let user = await (new Service(new Repository())).retrieveUser(request.params.id)
 
       if (!user) {
         return response
@@ -120,18 +105,20 @@ export class Handler {
           .send()
       }
 
-      await userRepository.delete(user)
+      await (new Service(new Repository())).removeUser(user)
 
       return response
         .status(204)
         .send()
 
     } catch (error) {
+
       return response
         .status(500)
         .json({
           "message": error.message
         })
+
     }
 
   }
