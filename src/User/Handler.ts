@@ -12,28 +12,22 @@ export class Handler {
         let user = await (new Service(new Repository())).retrieveUser(request.params.id)
 
         if (!user) {
-          return response
+          response
             .status(404)
             .send()
         }
 
-        return response.json(user)
+        response.json(user)
       }
 
       let users = await (new Service(new Repository())).listUsers()
 
-      return response.json({
+      response.json({
         items: users
       })
 
     } catch (error) {
-
-      return response
-        .status(500)
-        .json({
-          "message": error.message
-        })
-
+      next(error)
     }
 
   }
@@ -49,13 +43,7 @@ export class Handler {
         .json(user)
 
     } catch (error) {
-
-      response
-        .status(500)
-        .json({
-          "message": error.message
-        })
-
+      next(error)
     }
 
   }
@@ -67,28 +55,27 @@ export class Handler {
       let user = await (new Service(new Repository())).retrieveUser(request.params.id)
 
       if (!user) {
-        return response
+        response
           .status(404)
           .send()
       }
 
-      user.name = request.body.name
-      user.email = request.body.email
+      if (request.body.name) {
+        user.name = request.body.name
+      }
+
+      if (request.body.email) {
+        user.email = request.body.email
+      }
 
       await (new Service(new Repository())).updateUser(user)
 
-      return response
+      response
         .status(201)
         .json(user)
 
     } catch (error) {
-
-      return response
-        .status(500)
-        .json({
-          "message": error.message
-        })
-
+      next(error)
     }
 
   }
@@ -100,25 +87,19 @@ export class Handler {
       let user = await (new Service(new Repository())).retrieveUser(request.params.id)
 
       if (!user) {
-        return response
+        response
           .status(404)
           .send()
       }
 
       await (new Service(new Repository())).removeUser(user)
 
-      return response
+      response
         .status(204)
         .send()
 
     } catch (error) {
-
-      return response
-        .status(500)
-        .json({
-          "message": error.message
-        })
-
+      next(error)
     }
 
   }

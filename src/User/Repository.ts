@@ -21,7 +21,7 @@ export class Repository implements IRepository {
 
     let userModel = new UserModel(user)
 
-    userModel.validate()
+    await userModel.validate()
 
     return userModel.save()
   }
