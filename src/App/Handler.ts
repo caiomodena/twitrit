@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { MongoError } from 'mongodb';
+import { DataNotFound } from './Error';
 
 export class Handler {
 
@@ -9,6 +9,10 @@ export class Handler {
     let status = 500
     if (error.name == 'ValidationError' || error.name == 'MongoError') {
       status = 400
+    }
+
+    if (error instanceof DataNotFound) {
+      status = 404
     }
 
     response

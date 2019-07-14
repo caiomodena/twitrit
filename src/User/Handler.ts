@@ -9,22 +9,22 @@ export class Handler {
     try {
 
       if (request.params.id) {
-        let user = await (new Service(new Repository())).retrieveUser(request.params.id)
 
-        if (!user) {
-          response
-            .status(404)
-            .send()
-        }
+        let user = await (new Service(new Repository())).detail(request.params.id)
 
-        response.json(user)
+        response
+          .status(200)
+          .json(user)
+
       }
 
-      let users = await (new Service(new Repository())).listUsers()
+      let users = await (new Service(new Repository())).list()
 
-      response.json({
-        items: users
-      })
+      response
+        .status(200)
+        .json({
+          items: users
+        })
 
     } catch (error) {
       next(error)
@@ -36,7 +36,7 @@ export class Handler {
 
     try {
 
-      let user = await (new Service(new Repository())).createNewUser(request.body)
+      let user = await (new Service(new Repository())).create(request.body)
 
       response
         .status(201)
@@ -52,26 +52,10 @@ export class Handler {
 
     try {
 
-      let user = await (new Service(new Repository())).retrieveUser(request.params.id)
-
-      if (!user) {
-        response
-          .status(404)
-          .send()
-      }
-
-      if (request.body.name) {
-        user.name = request.body.name
-      }
-
-      if (request.body.email) {
-        user.email = request.body.email
-      }
-
-      await (new Service(new Repository())).updateUser(user)
+      let user = await (new Service(new Repository())).update(request.params.id, request.body)
 
       response
-        .status(201)
+        .status(200)
         .json(user)
 
     } catch (error) {
@@ -84,15 +68,7 @@ export class Handler {
 
     try {
 
-      let user = await (new Service(new Repository())).retrieveUser(request.params.id)
-
-      if (!user) {
-        response
-          .status(404)
-          .send()
-      }
-
-      await (new Service(new Repository())).removeUser(user)
+      await (new Service(new Repository())).removeUser(request.params.id)
 
       response
         .status(204)
