@@ -1,25 +1,22 @@
-import { Document, Schema, VirtualType } from 'mongoose'
-import { ObjectId } from 'bson';
+import { Document, Schema } from 'mongoose'
+import { IUser } from './Entity';
 
-export interface IUserModel extends IUser, Document {
-}
+export interface IUserModel extends IUser, Document { }
 
-export const UserSchema: Schema = new Schema({
-  name: {
-    type: String,
-    required: true
+export const UserSchema: Schema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true
+    }
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true
+  {
+    collection: 'user',
+    versionKey: false
   }
-}, {
-  collection: 'user',
-  versionKey: false
-})
-
-export interface IUser {
-  name: String,
-  email: String
-}
+)

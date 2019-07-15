@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
-import * as mongoose from 'mongoose'
-import { Repository as UserRepository } from './Repository'
-import { IUserModel, UserSchema } from './Schema';
+import { Repository } from './Repository'
+import { Service } from './Service';
 
 export class Handler {
 
@@ -9,51 +8,76 @@ export class Handler {
 
     try {
 
-      const database = mongoose.createConnection('mongodb://mongo', { dbName: 'twitrit' })
+      if (request.params.id) {
 
-      let userRepository = new UserRepository(database)
+        let user = await (new Service(new Repository())).detail(request.params.id)
 
-      response.json({
-        items: await userRepository.findAll(),
-        total: await userRepository.findCount()
-      })
+        response
+          .status(200)
+          .json(user)
+
+      }
+
+      let users = await (new Service(new Repository())).list()
+
+      response
+        .status(200)
+        .json({
+          items: users
+        })
 
     } catch (error) {
-      response
-        .status(500)
-        .json({
-          "message": error.message
-        })
+      next(error)
     }
 
   }
 
   public async post(request: Request, response: Response, next: NextFunction) {
+
     try {
 
-      const database = mongoose.createConnection('mongodb://mongo', { dbName: 'twitrit' })
-
-      let userRepository = new UserRepository(database)
-
-      let UserModel = database.model<IUserModel>('User', UserSchema)
-
-      let user = new UserModel(request.body)
-
-      user.validate()
-
-      await userRepository.save(user)
+      let user = await (new Service(new Repository())).create(request.body)
 
       response
         .status(201)
         .json(user)
 
     } catch (error) {
-      response
-        .status(500)
-        .json({
-          "message": error.message
-        })
+      next(error)
     }
 
   }
+
+  public async patch(request: Request, response: Response, next: NextFunction) {
+
+    try {
+
+      let user = await (new Service(new Repository())).update(request.params.id, request.body)
+
+      response
+        .status(200)
+        .json(user)
+
+    } catch (error) {
+      next(error)
+    }
+
+  }
+
+  public async delete(request: Request, response: Response, next: NextFunction) {
+
+    try {
+
+      await (new Service(new Repository())).removeUser(request.params.id)
+
+      response
+        .status(204)
+        .send()
+
+    } catch (error) {
+      next(error)
+    }
+
+  }
+
 }
