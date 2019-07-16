@@ -33,9 +33,8 @@ PUT /user/:id
 ### MVP
 
 Teste
-- Mocha
-- Chai
-- should
+- Jest
+- Supertest
 
 Database
 - Mongo
