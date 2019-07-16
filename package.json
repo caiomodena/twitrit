@@ -4,7 +4,7 @@
   "description": "Projeto para Twitrit ",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/jest --no-cache",
+    "test": "jest --no-cache",
     "dev": "nodemon --watch \"src/\" -e ts -r ts-node/register src/entry.ts",
     "build": "tsc"
   },
