@@ -1,4 +1,4 @@
-version: "2"
+version: "3.3"
 services:
     mongo:
         image: mongo
@@ -18,4 +18,4 @@ services:
         - ./:/usr/src/app
       ports:
         - "3007:3007"
-      command: npm run dev
+      command: bash -c "npm run test && npm run dev"
