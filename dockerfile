@@ -6,4 +6,4 @@ COPY ./ /app/src
 
 WORKDIR app/src
 
-RUN npm install-test
+RUN npm build
