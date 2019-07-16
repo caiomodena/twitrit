@@ -1,4 +1,5 @@
 # twitrit
+[![Build Status](https://travis-ci.org/Alexsandro0203/twitrit.svg?branch=master)](https://travis-ci.org/Alexsandro0203/twitrit)
 
 
 ### Tweet

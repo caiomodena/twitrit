@@ -1,7 +1,9 @@
-language: ruby
-
-services:
-  - docker
-
-before_install:
-  - docker build -t twirit:app.VERSION ./
+sudo: required
+dist: trusty
+language: node_js
+node_js:
+  - 10
+install:
+  - npm install
+script:
+  - npm run test
