@@ -2,6 +2,9 @@ version: "3.3"
 services:
     mongo:
         image: mongo
+        expose:
+          - "27017"
+          - "27018"
         ports:
             - "27018:27017"
         command: mongod
