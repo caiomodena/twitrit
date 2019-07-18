@@ -7,7 +7,7 @@ export interface IConnection {
 export class Mongo implements IConnection {
 
   public getConnection(): mongoose.Connection {
-    return mongoose.createConnection('mongodb://mongo', { dbName: 'twitrit' })
+    return mongoose.createConnection('mongodb://127.0.0.1', { dbName: 'twitrit' })
   }
 
 }

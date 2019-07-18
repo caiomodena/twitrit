@@ -15,8 +15,6 @@ server.post('/user', (new UserHandler()).post)
 server.patch('/user/:id', (new UserHandler()).patch)
 server.delete('/user/:id', (new UserHandler()).delete)
 
-server.get("/hello", (_, res) => { res.send("Hello node!")});
-
 server.use((new Handler()).error)
 
 export default server;
