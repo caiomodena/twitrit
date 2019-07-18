@@ -6,7 +6,7 @@ node_js:
 services:
   - mongodb
 before_script:
-  - mongo use twitrit
+  - mongo twitrit
 install:
   - npm install
 script:
