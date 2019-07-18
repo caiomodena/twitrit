@@ -3,6 +3,8 @@ dist: trusty
 language: node_js
 node_js:
   - 10
+services:
+  - mongodb
 install:
   - npm install
 script:
