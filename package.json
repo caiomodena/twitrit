@@ -4,7 +4,7 @@
   "description": "Projeto para Twitrit ",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --no-cache",
+    "test": "jest --detectOpenHandles --no-cache --forceExit",
     "dev": "nodemon --watch \"src/\" -e ts -r ts-node/register src/entry.ts",
     "build": "tsc"
   },
