@@ -6,8 +6,7 @@ node_js:
 services:
   - mongodb
 before_script:
-  - mongo twitrit
-  - sleep 15
+  - mongo use twitrit
 install:
   - npm install
 script:
