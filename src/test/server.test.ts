@@ -8,7 +8,8 @@ describe('Comportamento do usuário', () => {
     });
 
     test("Deverá ser possível incluir usuário.", async () => {
-        await req(server).post("/user",{name: 'testeNome', email: 'teste@teste.com.br'})
+        req(server).post("/user")
+            .send({name: 'testeNome', email: 'teste@teste.com.br'})
             .expect(201)
     });
 }
